@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Goldy's — Brand Comparison Tool</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --y:#FFD700;--yl:#FEFCE8;--ym:#FEF9C3;--yd:#D97706;--ydk:#B45309;
+  --s9:#0F172A;--s8:#1E293B;--s7:#334155;--s6:#475569;--s5:#64748B;--s4:#94A3B8;
+  --s3:#CBD5E1;--s2:#E2E8F0;--s1:#F1F5F9;--s0:#F8FAFC;
+  --g6:#16A34A;--g0:#F0FDF4;--g2:#BBF7D0;
+  --r5:#EF4444;--r0:#FFF1F2;--r2:#FECACA;
+  --fh:'Playfair Display',Georgia,serif;
+  --fb:'Poppins','Segoe UI',sans-serif;
+}
+body{font-family:var(--fb);background:#FFFEF5;color:var(--s9);line-height:1.6;font-size:15px}
+img{display:block}
+a{color:inherit;text-decoration:none}
+.w{max-width:1140px;margin:0 auto;padding:0 24px}
+
+/* ── HEADER ── */
+header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid #FEF08A;box-shadow:0 1px 6px rgba(0,0,0,.06)}
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;max-width:1140px;margin:0 auto}
+.hdr-logo{height:48px;width:auto}
+.hdr-r{text-align:right}
+.hdr-r p:first-child{font-size:.85rem;font-weight:700;color:var(--ydk)}
+.hdr-r p:last-child{font-size:.75rem;color:var(--s5)}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,#FCD34D 0%,#FDE68A 55%,#FEF3C7 100%);padding:64px 0}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.hero h1{font-family:var(--fh);font-size:clamp(2rem,3.5vw,3.2rem);font-weight:900;line-height:1.15;margin-bottom:16px;color:var(--s9)}
+.hero p{font-size:1.05rem;color:var(--s8);margin-bottom:24px;line-height:1.75}
+.btn-row{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;padding:12px 24px;border-radius:8px;font-family:var(--fb);font-size:.95rem;font-weight:600;cursor:pointer;border:2px solid transparent;transition:all .18s}
+.btn-dk{background:var(--s9);color:#fff;border-color:var(--s9)}
+.btn-dk:hover{background:var(--s8)}
+.btn-ol{background:transparent;color:var(--s9);border-color:var(--s9)}
+.btn-ol:hover{background:rgba(0,0,0,.04)}
+.hero-img-wrap{position:relative;border-radius:16px;overflow:hidden;background:linear-gradient(135deg,#FEF9C3,#FFF7E0);min-height:280px;display:flex;align-items:center;justify-content:center}
+.hero-img-wrap img{width:100%;height:100%;object-fit:cover;border-radius:16px}
+.img-fb{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;pointer-events:none}
+.img-fb-icon{font-size:56px}
+.img-fb-label{font-size:.75rem;font-weight:700;color:var(--ydk);text-transform:uppercase;letter-spacing:.06em}
+
+/* ── SECTIONS ── */
+section{padding:64px 0}
+.bg-white{background:#fff}
+.bg-slate{background:var(--s0)}
+.bg-dark{background:var(--s9);color:#fff}
+.bg-yellow{background:linear-gradient(135deg,#FCD34D,#FDE68A)}
+h2.st{font-family:var(--fh);font-size:clamp(1.7rem,2.8vw,2.4rem);font-weight:800;text-align:center;margin-bottom:10px}
+.ss{text-align:center;color:var(--s5);max-width:580px;margin:0 auto 40px;font-size:.95rem;line-height:1.7}
+.ss-light{color:var(--s4)}
+
+/* ── DIFFERENTIATOR CARDS ── */
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.dc{background:#fff;border:1px solid var(--s2);border-radius:12px;padding:20px;transition:box-shadow .2s}
+.dc:hover{box-shadow:0 6px 20px rgba(0,0,0,.08)}
+.dc-icon{font-size:28px;margin-bottom:12px}
+.dc-title{font-family:var(--fh);font-weight:700;font-size:1rem;margin-bottom:6px}
+.dc-desc{font-size:.82rem;color:var(--s5);line-height:1.55}
+
+/* ── LIFESTYLE IMAGES ── */
+.ls-wrap{position:relative;border-radius:14px;overflow:hidden;margin-bottom:32px}
+.ls-wrap img{width:100%;display:block;object-fit:cover}
+.ls-wrap .img-fb{background:linear-gradient(135deg,#FEF3C7,#FFF7ED);min-height:320px;position:relative;inset:unset;display:flex}
+
+/* ── ADVANTAGE CARDS ── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.ac{border-radius:12px;padding:20px}
+.ac.green{background:var(--g0);border:1px solid var(--g2)}
+.ac.red{background:var(--r0);border:1px solid var(--r2)}
+.ac-title{font-family:var(--fh);font-weight:700;font-size:1rem;margin-bottom:14px}
+.ac-title.green{color:#14532D}
+.ac-title.red{color:#7F1D1D}
+.chk{display:flex;align-items:flex-start;gap:8px;margin-bottom:10px;font-size:.83rem;color:var(--s7);line-height:1.55}
+.chk svg{flex-shrink:0;margin-top:2px}
+.ck{color:var(--g6)}
+.xk{color:var(--r5)}
+
+/* ── PRODUCT SELECTOR ── */
+.filter-label{font-size:.82rem;font-weight:600;color:var(--s7);margin-bottom:10px}
+.filter-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.fp{padding:7px 14px;border-radius:999px;border:none;font-family:var(--fb);font-size:.78rem;font-weight:500;cursor:pointer;transition:all .15s;background:var(--s2);color:var(--s7)}
+.fp:hover{background:var(--s3)}
+.fp.on{background:var(--y);color:var(--s9);box-shadow:0 3px 12px rgba(255,215,0,.45);transform:scale(1.05)}
+.fp-clr{background:none;border:none;font-size:.78rem;color:var(--s5);cursor:pointer;text-decoration:underline;font-family:var(--fb);margin-top:4px;display:none}
+.pg{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:24px}
+.pc{background:#fff;border:1px solid var(--s2);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .2s}
+.pc:hover{box-shadow:0 8px 28px rgba(0,0,0,.1)}
+.pc.feat{border:2px solid var(--y)}
+.pc-img{height:200px;background:linear-gradient(135deg,#FEF9C3,#FEFCE8);display:flex;align-items:center;justify-content:center;overflow:hidden;font-size:52px}
+.pc-img img{width:100%;height:100%;object-fit:contain;padding:16px}
+.pc-body{padding:16px;flex:1;display:flex;flex-direction:column;gap:12px}
+.pc-name{font-family:var(--fh);font-weight:700;color:var(--ydk);font-size:.98rem}
+.pc-desc{font-size:.77rem;color:var(--s5);line-height:1.45}
+.pc-price{font-size:1.8rem;font-weight:800;color:var(--s9)}
+.pc-psub{font-size:.73rem;color:var(--s4);margin-top:1px}
+.prot{background:var(--ym);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px}
+.prot strong{color:var(--ydk);font-size:1.1rem;font-weight:800}
+.prot span{font-size:.76rem;color:#92400E}
+.fg2{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.fp2{font-size:.68rem;padding:4px 7px;border-radius:6px;display:flex;align-items:center;gap:4px;line-height:1.3}
+.fp2.y{background:var(--g0);color:#15803D}
+.fp2.n{background:var(--s1);color:var(--s4)}
+.pop{background:var(--ym);color:#92400E;font-size:.68rem;font-weight:700;padding:4px 10px;border-radius:6px;display:inline-block}
+.shop-btn{background:#EAB308;color:var(--s9);border:none;border-radius:8px;padding:11px;font-family:var(--fb);font-weight:700;font-size:.85rem;cursor:pointer;width:100%;margin-top:auto;transition:background .18s}
+.shop-btn:hover{background:#CA8A04}
+.no-res{grid-column:1/-1;text-align:center;padding:40px;color:var(--s5)}
+.info-box{background:var(--yl);border:2px solid #FCD34D;border-radius:12px;padding:20px;margin-top:28px}
+.info-box h4{font-family:var(--fh);font-weight:700;margin-bottom:12px;font-size:1rem}
+.info-box li{font-size:.84rem;color:var(--s7);margin-bottom:8px;line-height:1.6;list-style:none}
+
+/* ── PRICING ── */
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.prc{background:#fff;border:1px solid var(--s2);border-radius:12px;padding:22px}
+.prc.feat{border:2px solid var(--y);box-shadow:0 6px 20px rgba(255,215,0,.18)}
+.prc-title{font-family:var(--fh);font-weight:700;color:var(--ydk);font-size:1.05rem;margin-bottom:2px}
+.prc-sub{font-size:.76rem;color:var(--s4);margin-bottom:12px}
+.prc-big{font-size:2.4rem;font-weight:800;color:var(--s9);line-height:1}
+.prc-per{font-size:.76rem;color:var(--s5);margin-top:3px;margin-bottom:14px}
+
+/* ── TABS ── */
+.tab-nav{display:grid;grid-template-columns:repeat(3,1fr);background:var(--s8);border-radius:10px;padding:4px;gap:4px;margin-bottom:16px}
+.tb{padding:10px;border:none;background:transparent;color:var(--s4);font-family:var(--fb);font-size:.85rem;font-weight:500;border-radius:7px;cursor:pointer;transition:all .15s}
+.tb.on{background:var(--s7);color:#fff}
+.tp{display:none}
+.tp.on{display:block}
+.tc{background:var(--s8);border:1px solid var(--s7);border-radius:12px;padding:20px}
+.tc h3{font-family:var(--fh);color:#fff;margin-bottom:14px;font-size:1.1rem}
+.tc p{color:var(--s4);font-size:.85rem;margin-bottom:12px;line-height:1.75}
+.tc strong{color:var(--y)}
+.te{margin-bottom:14px}
+.te-t{font-weight:600;color:var(--y);margin-bottom:4px;font-size:.85rem}
+.te-b{color:var(--s4);font-size:.85rem;line-height:1.7}
+
+/* ── COMPARISON TABLE ── */
+.tw{overflow-x:auto;border-radius:12px;border:1px solid var(--s2);box-shadow:0 2px 10px rgba(0,0,0,.05)}
+table{width:100%;border-collapse:collapse;min-width:740px}
+thead tr{background:var(--s1);border-bottom:2px solid var(--s3)}
+th{padding:12px 14px;font-size:.73rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--s6);white-space:nowrap;text-align:center}
+th:first-child{text-align:left;min-width:170px}
+th.yc{color:var(--ydk)}
+td{padding:10px 14px;border-bottom:1px solid var(--s1);text-align:center}
+td.fn{text-align:left;font-weight:600;color:var(--s8);font-size:.85rem}
+tr:nth-child(even) td{background:var(--s1)}
+td.yc{background:#FEFCE8}
+tr:nth-child(even) td.yc{background:#FEF9C3}
+.i-ck{color:var(--g6)}
+.i-xk{color:#FDA4AF}
+
+/* ── ADVANTAGE BOX ── */
+.ab{background:var(--yl);border:2px solid #FCD34D;border-radius:12px;padding:24px;margin-top:28px}
+.ab h3{font-family:var(--fh);font-size:1.3rem;margin-bottom:14px}
+
+/* ── CTA ── */
+.cta{background:linear-gradient(135deg,#FCD34D,#FDE68A);padding:72px 0;text-align:center}
+.cta h2{font-family:var(--fh);font-size:clamp(1.7rem,2.8vw,2.4rem);margin-bottom:12px}
+.cta p{font-size:1rem;color:var(--s8);max-width:500px;margin:0 auto 28px;line-height:1.75}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+/* ── FOOTER ── */
+footer{background:var(--s9);color:#fff;padding:48px 0 28px}
+.fg{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:24px;margin-bottom:28px}
+.f-logo{height:38px;width:auto;margin-bottom:10px}
+.f-text{font-size:.78rem;color:var(--s4);line-height:1.65}
+.f-head{font-family:var(--fh);font-size:.95rem;margin-bottom:10px}
+.f-links{list-style:none}
+.f-links li{margin-bottom:5px}
+.f-links a{font-size:.78rem;color:var(--s4);transition:color .15s}
+.f-links a:hover{color:#fff}
+.f-socials{display:flex;gap:14px;margin-top:10px}
+.f-socials a{font-size:.78rem;color:var(--s4);transition:color .15s}
+.f-socials a:hover{color:#fff}
+.f-bottom{border-top:1px solid var(--s8);padding-top:20px;text-align:center;font-size:.73rem;color:var(--s5)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .hero-grid,.g4,.g2,.g3,.fg{grid-template-columns:1fr 1fr}
+  .pg{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .hero-grid,.g4,.g2,.g3,.pg,.fg{grid-template-columns:1fr}
+  .hero{padding:40px 0}
+  section{padding:40px 0}
+  h2.st{font-size:1.6rem}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="hdr">
+    <img src="https://goldys.ca/cdn/shop/files/GOLDYS_FULL_LOGO_FINAL3.png?v=1723127673"
+         onerror="this.outerHTML='<span style=\'font-family:Georgia,serif;font-size:1.4rem;font-weight:900\'>🌾 Goldy\'s</span>'"
+         alt="Goldy's" class="hdr-logo" />
+    <div class="hdr-r">
+      <p>Made in Canada 🇨🇦</p>
+      <p>Just Right for the Whole Family</p>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="w">
+    <div class="hero-grid">
+      <div>
+        <h1>The Oatmeal You Grew Up With, Made Better.</h1>
+        <p>Goldy's is the only Canadian oatmeal crafted in a nut-free facility with no refined sugars, real freeze-dried fruit, and up to 10g of plant protein. Just right for the whole family.</p>
+        <div class="btn-row">
+          <button class="btn btn-dk">View Full Comparison</button>
+          <button class="btn btn-ol">Learn More</button>
+        </div>
+      </div>
+      <div class="hero-img-wrap">
+        <img src="https://goldys.ca/cdn/shop/files/G_B2.png?v=1771336907" alt="Goldy's" onerror="this.style.display='none'" />
+        <div class="img-fb">
+          <span class="img-fb-icon">🐻</span>
+          <span class="img-fb-label">Goldy &amp; Bear</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KEY DIFFERENTIATORS -->
+<section class="bg-white">
+  <div class="w">
+    <h2 class="st">Why Goldy's Stands Out</h2>
+    <p class="ss">Goldy's unique combination of features creates an unmatched value proposition in the Canadian better-for-you breakfast market.</p>
+    <div class="g4">
+      <div class="dc"><div class="dc-icon">⭐</div><div class="dc-title">Up to 10g Plant Protein</div><div class="dc-desc">Fava bean isolate + five-seed blend in Protein+ — a first for Canadian instant oatmeal</div></div>
+      <div class="dc"><div class="dc-icon">🛡️</div><div class="dc-title">Nut-Free Facility</div><div class="dc-desc">Made in a dedicated nut-free facility — safe for every member of the family</div></div>
+      <div class="dc"><div class="dc-icon">🍯</div><div class="dc-title">No Refined Sugars</div><div class="dc-desc">Sweetened with organic date powder only — never refined sugar</div></div>
+      <div class="dc"><div class="dc-icon">👨‍👩‍👧‍👦</div><div class="dc-title">Family-First Always</div><div class="dc-desc">Designed for the whole family: Goldilocks-inspired, just right for all ages</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURE COMPARISON -->
+<section class="bg-slate">
+  <div class="w">
+    <h2 class="st">Feature Comparison Matrix</h2>
+    <p class="ss">Goldy's leads the market with the most comprehensive feature set. See how we compare to major competitors.</p>
+
+    <div class="ls-wrap">
+      <img src="https://goldys.ca/cdn/shop/files/Isha_Lauren_4.png?v=1770320055" alt="Goldy's Family" onerror="this.style.display='none'" />
+      <div class="img-fb" style="min-height:300px;background:linear-gradient(135deg,#FEF3C7,#FFF7ED)">
+        <span class="img-fb-icon">🌻</span>
+        <span class="img-fb-label">Goldy's Family Photo</span>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="ac green">
+        <div class="ac-title green">Goldy's Unique Advantages</div>
+        <div class="chk"><svg class="ck" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Only Canadian oatmeal: nut-free facility + no refined sugars + real freeze-dried fruit</div>
+        <div class="chk"><svg class="ck" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Protein+ adds up to 10g plant protein via fava bean isolate — unique in Canada</div>
+        <div class="chk"><svg class="ck" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Glyphosate-free, Non-GMO, Kosher, and Dairy-Free certified across all lines</div>
+        <div class="chk"><svg class="ck" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Superseed blend (chia, hemp, buckwheat) delivers added fibre and omega-3s</div>
+        <div class="chk"><svg class="ck" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Made in Ontario with Canadian-grown ingredients and local suppliers</div>
+      </div>
+      <div class="ac red">
+        <div class="ac-title red">Competitor Gaps</div>
+        <div class="chk"><svg class="xk" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Holy Crap: No high-protein boost, no nut-free facility certification</div>
+        <div class="chk"><svg class="xk" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Quaker: Refined sugars, no glyphosate-free claim, mass-market positioning</div>
+        <div class="chk"><svg class="xk" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Nature's Path: Organic-forward but lacks protein focus and nut-free facility</div>
+        <div class="chk"><svg class="xk" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>One Degree: Quality brand but no nut-free facility or protein boosting</div>
+        <div class="chk"><svg class="xk" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Purely Elizabeth: US brand only — limited Canadian market presence</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCT SELECTOR -->
+<section class="bg-white">
+  <div class="w">
+    <h2 class="st">Find Your Perfect Product</h2>
+    <p class="ss">All Goldy's products are nut-free, gluten-free, non-GMO, glyphosate-free, kosher, and made in Canada. Filter to find your just-right match.</p>
+    <p class="filter-label">Filter by feature:</p>
+    <div class="filter-row" id="fr"></div>
+    <button class="fp-clr" id="clrBtn" onclick="clr()">Clear all filters</button>
+    <div class="pg" id="pg"></div>
+    <div class="info-box">
+      <h4>Not sure which one is just right for you?</h4>
+      <ul>
+        <li>💪 <strong>Want max protein?</strong> Protein+ Oatmeal delivers 10g per serving with fava bean isolate — perfect for a filling family breakfast</li>
+        <li>🍓 <strong>Want real fruit + superseeds?</strong> Superseed Oatmeal has chia, hemp, and buckwheat plus real freeze-dried fruit at $6.99</li>
+        <li>✨ <strong>Want something premium?</strong> Superseed Cereal is our most indulgent bowl — rich superseeds, real fruit, and bold flavours</li>
+        <li>🚫 <strong>Nut allergy in the family?</strong> Every Goldy's product is made in a dedicated nut-free facility — no exceptions</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="bg-slate">
+  <div class="w">
+    <h2 class="st">Pricing &amp; Value Analysis</h2>
+    <p class="ss">Goldy's offers premium value at the median price point of the better-for-you oatmeal category.</p>
+
+    <div class="ls-wrap">
+      <img src="https://goldys.ca/cdn/shop/files/Isha_Lauren_5.png?v=1770320468" alt="Goldy's Family" onerror="this.style.display='none'" />
+      <div class="img-fb" style="min-height:300px;background:linear-gradient(135deg,#FFF7ED,#FEF3C7)">
+        <span class="img-fb-icon">🌅</span>
+        <span class="img-fb-label">Goldy's Lifestyle Photo</span>
+      </div>
+    </div>
+
+    <div class="g3">
+      <div class="prc">
+        <div class="prc-title">Superseed Oatmeal</div>
+        <div class="prc-sub">$6.99 CAD</div>
+        <div class="prc-big">$1.17</div>
+        <div class="prc-per">per serving (6 packets)</div>
+        <div class="chk"><svg class="ck" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>4g protein</div>
+        <div class="chk"><svg class="ck" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Real freeze-dried fruit</div>
+        <div class="chk"><svg class="ck" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Chia, hemp, buckwheat blend</div>
+      </div>
+      <div class="prc feat">
+        <div class="prc-title">Protein+ Oatmeal</div>
+        <div class="prc-sub">$7.99 CAD</div>
+        <div class="prc-big">$1.60</div>
+        <div class="prc-per">per serving (5 packets)</div>
+        <div class="chk"><svg class="ck" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>10g plant protein</div>
+        <div class="chk"><svg class="ck" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>5g fibre per serving</div>
+        <div class="chk"><svg class="ck" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Fava bean isolate</div>
+        <div style="margin-top:10px"><span class="pop">MOST POPULAR</span></div>
+      </div>
+      <div class="prc">
+        <div class="prc-title">Superseed Cereal</div>
+        <div class="prc-sub">$10.99 CAD</div>
+        <div class="prc-big">$1.83</div>
+        <div class="prc-per">per serving (6 servings)</div>
+        <div class="chk"><svg class="ck" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>5g protein</div>
+        <div class="chk"><svg class="ck" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Premium superseed blend</div>
+        <div class="chk"><svg class="ck" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Real freeze-dried fruit</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAMILY STORY -->
+<section class="bg-white">
+  <div class="w">
+    <h2 class="st">Your Morning Story Begins...</h2>
+    <p class="ss">Inspired by Goldilocks, Goldy's is crafted to be just right — for busy school mornings, cozy weekends, and every messy moment in between.</p>
+    <div class="ls-wrap">
+      <img src="https://goldys.ca/cdn/shop/files/Isha_Lauren_2.png?v=1770319940" alt="Family Enjoying Goldy's" onerror="this.style.display='none'" />
+      <div class="img-fb" style="min-height:360px;background:linear-gradient(135deg,#FFF7ED,#FFFBEB)">
+        <span class="img-fb-icon">👨‍👩‍👧‍👦</span>
+        <span class="img-fb-label">Your Morning Story Begins Here</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARKET POSITIONING TABS -->
+<section class="bg-dark">
+  <div class="w">
+    <h2 class="st">Market Positioning Strategy</h2>
+    <p class="ss ss-light">Goldy's occupies a unique position: premium health credentials at a family-accessible price.</p>
+    <div class="tab-nav">
+      <button class="tb on" onclick="tab('pos')">Positioning</button>
+      <button class="tb" onclick="tab('gap')">Market Gaps</button>
+      <button class="tb" onclick="tab('rec')">Recommendations</button>
+    </div>
+    <div class="tp on" id="tp-pos">
+      <div class="tc">
+        <h3>Goldy's Unique Positioning</h3>
+        <p><strong>Primary Claim:</strong> The only Canadian oatmeal in a nut-free facility with no refined sugars, real freeze-dried fruit, and up to 10g of plant protein.</p>
+        <p><strong>Target Audience:</strong> Health-conscious Canadian parents seeking allergen-safe, clean-label breakfast options the whole family will actually love.</p>
+        <p><strong>Emotional Benefit:</strong> The joy and peace of mind of a "just right" breakfast — nourishing, convenient, and made for real family mornings.</p>
+        <p><strong>Price Positioning:</strong> Premium value — above mass-market (Quaker) but accessible compared to ultra-premium seed-only brands (Holy Crap).</p>
+      </div>
+    </div>
+    <div class="tp" id="tp-gap">
+      <div class="tc">
+        <h3>Market Gaps &amp; Opportunities</h3>
+        <div class="te"><div class="te-t">1. Plant Protein + Allergen-Safe = Defensible White Space</div><div class="te-b">No competitor combines meaningful plant protein with nut-free facility certification. This is Goldy's most defensible position in market.</div></div>
+        <div class="te"><div class="te-t">2. Family-First Narrative is Unclaimed</div><div class="te-b">Competitors skew toward athlete performance or solo wellness. Goldy's can own "family breakfast" as a category — inspired by the Goldilocks "just right" ethos.</div></div>
+        <div class="te"><div class="te-t">3. Real Fruit Transparency</div><div class="te-b">Goldy's visible freeze-dried fruit is a claim no instant oatmeal competitor can truthfully match. This should lead all packaging and marketing.</div></div>
+        <div class="te"><div class="te-t">4. Clean-Label Front-of-Pack</div><div class="te-b">Goldy's date powder sweetening is compliant with Canada's front-of-pack labelling rules — a claim mass brands simply cannot make.</div></div>
+      </div>
+    </div>
+    <div class="tp" id="tp-rec">
+      <div class="tc">
+        <h3>Strategic Recommendations</h3>
+        <div class="te"><div class="te-t">If Competing on Price:</div><div class="te-b">Don't chase Quaker. Any sub-$5.99 price point puts Goldy's in a tier that undercuts the brand's quality story and premium family positioning.</div></div>
+        <div class="te"><div class="te-t">If Competing on Value:</div><div class="te-b">Lead with the unique combination claim. At $7.99, Protein+ is at or below Kodiak Canada pricing with a superior allergen profile and Canadian-made story.</div></div>
+        <div class="te"><div class="te-t">If Competing on Channel:</div><div class="te-b">A DTC subscription model (Goldy's Breakfast Club) at 10-15% off would capture repeat buyers and build direct relationships with Canadian families.</div></div>
+        <div class="te"><div class="te-t">If Competing on Distribution:</div><div class="te-b">Deepen specialty and health retail across Ontario and Quebec before chasing mass. Placement in Whole Foods, Longo's, Metro, and IGA builds credibility that drives national expansion.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DETAILED FEATURE TABLE -->
+<section class="bg-white">
+  <div class="w">
+    <h2 class="st">Detailed Feature Breakdown</h2>
+    <div class="tw" style="margin-top:32px">
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align:left">Feature</th>
+            <th class="yc">Goldy's</th>
+            <th>Holy Crap</th>
+            <th>Quaker</th>
+            <th>Nature's Path</th>
+            <th>One Degree</th>
+            <th>Purely Elizabeth</th>
+            <th>Kodiak</th>
+          </tr>
+        </thead>
+        <tbody id="ct"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="w">
+    <h2>Just Right for Your Family's Morning.</h2>
+    <p>Goldy's is available in stores across Canada and online. Find your flavour and make breakfast the best part of the day.</p>
+    <div class="cta-btns">
+      <a href="https://goldys.ca" class="btn btn-dk">Shop Now</a>
+      <a href="https://goldys.ca/pages/store-locator-2" class="btn btn-ol">Find in Stores</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="w">
+    <div class="fg">
+      <div>
+        <img src="https://goldys.ca/cdn/shop/files/GOLDYS_FULL_LOGO_FINAL3.png?v=1723127673"
+             onerror="this.outerHTML='<span style=\'color:#fff;font-family:Georgia,serif;font-size:1.2rem;font-weight:900;display:block;margin-bottom:10px\'>🌾 Goldy\'s</span>'"
+             alt="Goldy's" class="f-logo" style="filter:brightness(0) invert(1)" />
+        <p class="f-text">Crafted in Ontario with plant-based goodness — just right for the whole family.</p>
+        <div class="f-socials">
+          <a href="https://instagram.com/goldysjustright">Instagram</a>
+          <a href="https://www.tiktok.com/@goldysjustright/">TikTok</a>
+          <a href="https://www.facebook.com/goldysjustright">Facebook</a>
+        </div>
+      </div>
+      <div>
+        <div class="f-head">Products</div>
+        <ul class="f-links">
+          <li><a href="https://goldys.ca/collections/proteinoatmeal">Protein+ Oatmeal</a></li>
+          <li><a href="https://goldys.ca/collections/instant-oatmeal">Superseed Oatmeal</a></li>
+          <li><a href="https://goldys.ca/collections/superseed-cereal">Superseed Cereal</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="f-head">About</div>
+        <ul class="f-links">
+          <li><a href="https://goldys.ca/pages/our-story">Our Story</a></li>
+          <li><a href="https://goldys.ca/pages/our-ingredients">Our Ingredients</a></li>
+          <li><a href="https://goldys.ca/pages/store-locator-2">Find a Store</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="f-head">Contact</div>
+        <p class="f-text">justright@goldys.ca</p>
+      </div>
+    </div>
+    <div class="f-bottom">© 2026 Goldy's. All rights reserved. | Proudly made in Canada 🇨🇦</div>
+  </div>
+</footer>
+
+<script>
+const SVG_CK=`<svg class="i-ck" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`;
+const SVG_XK=`<svg class="i-xk" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`;
+const SVG_CK_SM=`<svg class="ck" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`;
+const SVG_XK_SM=`<svg style="color:#94A3B8" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`;
+
+// Image fallback — hide placeholder once real image loads
+document.querySelectorAll('.ls-wrap img, .hero-img-wrap img').forEach(img => {
+  const wrap = img.parentElement;
+  const fb = wrap.querySelector('.img-fb');
+  if (!fb) return;
+  if (img.complete && img.naturalWidth > 0) { fb.style.display = 'none'; return; }
+  img.addEventListener('load', () => { if (img.naturalWidth > 0) fb.style.display = 'none'; });
+  img.addEventListener('error', () => img.style.display = 'none');
+});
+
+// ── PRODUCT DATA ──
+const prods = [
+  { id:'ss-oat', name:"Goldy's Superseed Oatmeal", price:'$6.99 CAD', per:'$1.17', img:'https://goldys.ca/cdn/shop/collections/OatmealStarter.png?v=1731360846', emoji:'🌾', desc:'Instant oatmeal with real freeze-dried fruit, chia, hemp & buckwheat', prot:4,
+    f:{highProtein:false,nutFree:true,noRefinedSugar:true,realFruit:true,vegan:true,glutenFree:true,kosher:true,canadianMade:true} },
+  { id:'prot', name:"Goldy's Protein+ Oatmeal", price:'$7.99 CAD', per:'$1.60', img:'https://goldys.ca/cdn/shop/files/1.png?v=1770138769', emoji:'💪', desc:'Fava bean protein-packed instant oatmeal — 10g protein, 5g fibre', prot:10, feat:true,
+    f:{highProtein:true,nutFree:true,noRefinedSugar:true,realFruit:true,vegan:true,glutenFree:true,kosher:true,canadianMade:true} },
+  { id:'ss-cer', name:"Goldy's Superseed Cereal", price:'$10.99 CAD', per:'$1.83', img:'https://goldys.ca/cdn/shop/collections/SuperseedStarter.png?v=1731360626', emoji:'✨', desc:'Premium superseed blend cereal with real freeze-dried fruit', prot:5,
+    f:{highProtein:false,nutFree:true,noRefinedSugar:true,realFruit:true,vegan:true,glutenFree:true,kosher:true,canadianMade:true} },
+];
+const filters = [
+  {k:'highProtein',l:'💪 10g+ Protein'},{k:'nutFree',l:'🚫 Nut-Free Facility'},
+  {k:'noRefinedSugar',l:'🍯 No Refined Sugar'},{k:'realFruit',l:'🍓 Real Fruit'},
+  {k:'vegan',l:'🌱 Vegan'},{k:'glutenFree',l:'🌾 Gluten-Free'},
+  {k:'kosher',l:'✡️ Kosher'},{k:'canadianMade',l:'🇨🇦 Canadian-Made'},
+];
+let active = new Set();
+
+function renderFilters() {
+  document.getElementById('fr').innerHTML = filters.map(f =>
+    `<button class="fp${active.has(f.k)?' on':''}" onclick="tog('${f.k}')">${f.l}</button>`
+  ).join('');
+  document.getElementById('clrBtn').style.display = active.size ? 'block' : 'none';
+}
+
+function renderProds() {
+  const shown = prods.filter(p => active.size === 0 || [...active].every(k => p.f[k]));
+  if (!shown.length) {
+    document.getElementById('pg').innerHTML = `<div class="no-res"><p style="font-size:2rem;margin-bottom:8px">🙈</p><p style="margin-bottom:12px">No products match all your filters.</p><button onclick="clr()" style="background:none;border:none;color:#B45309;cursor:pointer;font-weight:700;font-size:.85rem;text-decoration:underline">Adjust filters</button></div>`;
+    return;
+  }
+  document.getElementById('pg').innerHTML = shown.map(p => `
+    <div class="pc${p.feat?' feat':''}">
+      <div class="pc-img">
+        <img src="${p.img}" alt="${p.name}" style="width:100%;height:100%;object-fit:contain;padding:16px"
+             onerror="this.outerHTML='<span style=\\'font-size:52px\\'>${p.emoji}</span>'" />
+      </div>
+      <div class="pc-body">
+        <div>
+          <div class="pc-name">${p.name}</div>
+          <div class="pc-desc">${p.desc}</div>
+        </div>
+        <div>
+          <div class="pc-price">${p.per}</div>
+          <div class="pc-psub">${p.price}</div>
+        </div>
+        <div class="prot"><strong>${p.prot}g</strong><span>Protein per serving</span></div>
+        <div>
+          <p style="font-size:.7rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">Features</p>
+          <div class="fg2">${filters.map(f=>`<div class="fp2 ${p.f[f.k]?'y':'n'}">${p.f[f.k]?'✓':'–'} ${f.l.replace(/^.+? /,'')}</div>`).join('')}</div>
+        </div>
+        ${p.feat?'<div><span class="pop">MOST POPULAR</span></div>':''}
+        <button class="shop-btn" onclick="window.open('https://goldys.ca','_blank')">Shop Now</button>
+      </div>
+    </div>`).join('');
+}
+
+function tog(k) { active.has(k) ? active.delete(k) : active.add(k); renderFilters(); renderProds(); }
+function clr() { active.clear(); renderFilters(); renderProds(); }
+renderFilters(); renderProds();
+
+// ── COMPARISON TABLE ──
+const rows = [
+  {f:'10g+ Plant Protein',     v:[true, false,false,false,false,false,false]},
+  {f:'Nut-Free Facility',      v:[true, false,false,false,false,false,false]},
+  {f:'No Refined Sugars',      v:[true, true, false,true, true, true, false]},
+  {f:'Real Freeze-Dried Fruit',v:[true, false,false,true, false,true, false]},
+  {f:'Glyphosate-Free',        v:[true, true, false,true, true, true, false]},
+  {f:'Non-GMO',                v:[true, true, false,true, true, true, true ]},
+  {f:'Instant Format',         v:[true, true, true, true, true, true, true ]},
+  {f:'Vegan',                  v:[true, true, true, true, true, true, false]},
+  {f:'Kosher',                 v:[true, true, true, true, true, false,false]},
+  {f:'Canadian-Made',          v:[true, true, false,true, true, false,false]},
+];
+document.getElementById('ct').innerHTML = rows.map((r,i) =>
+  `<tr>
+    <td class="fn">${r.f}</td>
+    ${r.v.map((v,j) => `<td${j===0?' class="yc"':''}>${v ? SVG_CK : SVG_XK}</td>`).join('')}
+  </tr>`
+).join('');
+
+// ── TABS ──
+function tab(id) {
+  document.querySelectorAll('.tb').forEach((b,i) => b.classList.toggle('on', ['pos','gap','rec'][i] === id));
+  document.querySelectorAll('.tp').forEach(p => p.classList.remove('on'));
+  document.getElementById('tp-'+id).classList.add('on');
+}
+</script>
+</body>
+</html>
